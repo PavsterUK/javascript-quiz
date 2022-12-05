@@ -42,15 +42,22 @@ ol {
   padding-left: 0px;
   max-height: 400px;
   overflow: auto;
+  list-style: none;
+  counter-reset: olCounter;
 }
 
 li {
   padding: 5px;
-  list-style: decimal inside none;
+  counter-increment: olCounter;
+  
 }
 
 li:nth-child(odd) {
   background-color: #f3edfc;
+}
+
+li button::before {
+  content: counter(olCounter) ". ";
 }
 
 .wrapper {

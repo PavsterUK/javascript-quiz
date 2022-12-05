@@ -1,29 +1,33 @@
 export const questions = [
   {
-    question: "What is NOT a variable in JavaScript.",
-    answers: ["let", "var", "const", "string"],
-    correct: 3,
+    id: 0,
+    question: "What is NOT a variable type in JavaScript.",
+    options: ["let", "var", "const", "string"],
+    answer: 3,
   },
   {
+    id: 1,
     question: "What is NOT a JavaScript Data type.",
-    answers: ["Undefined", "Boolean", "Object", "Null"],
-    correct: 3,
+    options: ["Undefined", "Boolean", "Object", "Null"],
+    answer: 3,
   },
   {
-    question:
-      "What are all the types of Pop up boxes available in JavaScript. (3 Answers)",
-    answers: ["Alert", "Confirm", "Prompt", "Alarm"],
-    correct: [0, 1, 2],
+    id: 2,
+    question: "What Pop up box type is NOT available in JavaScript.",
+    options: ["Alert", "Confirm", "Prompt", "Alarm"],
+    answer: 3,
   },
   {
+    id: 3,
     question: "What is NOT a loop JavaScript.",
-    answers: ["for", "of", "in", "about"],
-    correct: 2,
+    options: ["for", "of", "in", "about"],
+    answer: 3,
   },
   {
+    id: 4,
     question:
       "If we try to assign value to undeclared variable, what error message we'll see.",
-    answers: ["not defined", "nndefined", "null", "goofy was here"],
-    correct: 0,
+    options: ["not defined", "undefined", "null", "goofy was here"],
+    answer: 0,
   },
 ];
