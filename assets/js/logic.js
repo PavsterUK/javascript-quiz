@@ -1,8 +1,10 @@
 import { questions } from "./questions.js";
-let remainingTime = 76;
 
-let startQuizButn = document.getElementById("start");
-startQuizButn.addEventListener("click", startQuiz);
+const questionWrapper = document.getElementById("questions");
+const questionH2 = document.getElementById("question-title");
+const choisesDiv = document.getElementById("choices");
+const startQuizBtn = document.getElementById("start");
+let remainingTime = 75;
 
 function showDiv(divID) {
   let targetDiv = document.getElementById(divID);
@@ -15,29 +17,21 @@ function hideDiv(divID) {
   targetDiv.setAttribute("class", "hide");
 }
 
-function showQuestReturnAnsw(questionObj) {
-  showDiv("questions");
-  let questionDiv = document.getElementById("question-title");
-  let questionText = document.createTextNode(questionObj.question);
-  questionDiv.appendChild(questionText);
-
-  let optionsDiv = document.getElementById("choices");
+function renderQuestion(question) {
   const ol = document.createElement("ol");
-  ol.setAttribute("id", "ol");
-  let orderedList = document.getElementById("ol");
-  
-  for (const option of questionObj.options) {
-    let optionText = document.createTextNode(option);
-    const li = document.createElement("li");
-    const btn = document.createElement("button");
-    btn.appendChild(optionText);
+  const li = document.createElement("li");
+  const btn = document.createElement("button");
+  questionH2.appendChild(document.createTextNode(question.text));
+  for (let choise of question.choises) {
+    btn.appendChild(document.createTextNode(choise));
     li.appendChild(btn);
     ol.appendChild(li);
   }
-  optionsDiv.appendChild(ol);
+  choisesDiv.appendChild(ol);
+  showDiv("questions");
 }
 
-function startLoop() {
+function startTimer() {
   setInterval(function () {
     if (remainingTime > 0) {
       remainingTime--;
@@ -46,8 +40,14 @@ function startLoop() {
   }, 1000);
 }
 
-function startQuiz() {
-  hideDiv("start-screen");
-  startLoop();
-  showQuestReturnAnsw(questions[0]);
+function askQuestion(question) {
+  setInterval(function () {}, remainingTime * 1000);
 }
+
+function startQuiz() {
+  startTimer();
+  hideDiv("start-screen");
+  renderQuestion(questions[0]);
+}
+
+startQuizBtn.addEventListener("click", startQuiz);
