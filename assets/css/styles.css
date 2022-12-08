@@ -39,14 +39,21 @@ input[type="text"] {
 }
 
 ol {
+  counter-reset: css-counter 0;
   padding-left: 0px;
   max-height: 400px;
   overflow: auto;
 }
 
 li {
+  counter-increment: css-counter 1;
+  display: flex;
+  align-items: center;
   padding: 5px;
-  list-style: decimal inside none;
+}
+
+li:before {
+  content: counter(css-counter) ". ";
 }
 
 li:nth-child(odd) {
