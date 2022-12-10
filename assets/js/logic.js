@@ -73,7 +73,7 @@ function quizEndRoutine() {
 function correctAnswerRoutine() {
   showElement("feedback");
   feedbackDiv.textContent = "Correct!";
-  const audio = new Audio("codiing-quiz-js/assets/sfx/correct.wav");
+  const audio = new Audio('assets/sfx/correct.wav');
   audio.play();
   setTimeout(function () {
     hideElement("feedback");
@@ -84,7 +84,7 @@ function wrongAnswerRoutine() {
   remainingTime -= 15;
   showElement("feedback");
   feedbackDiv.textContent = "Wrong!";
-  const audio = new Audio("codiing-quiz-js/assets/sfx/incorrect.wav");
+  const audio = new Audio('assets/sfx/incorrect.wav');
   audio.play();
   setTimeout(function () {
     hideElement("feedback");
