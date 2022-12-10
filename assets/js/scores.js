@@ -16,7 +16,7 @@ function listAllScores() {
 
 function clearLocalStorage() {
   localStorage.removeItem("highScores");
-  listAll();
+  listAllScores();
 }
 
 clearScoresButton.addEventListener("click", clearLocalStorage);
