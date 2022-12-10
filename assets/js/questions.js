@@ -5,9 +5,9 @@ export const questionList = [
     answer: "string",
   },
   {
-    text: "What is NOT a JavaScript Data type.",
-    choises: ["Undefined", "Boolean", "Object", "Null"],
-    answer: "Null",
+    text: "What is NOT a JavaScript Primitive Data type.",
+    choises: ["Undefined", "Boolean", "Number", "Object"],
+    answer: "Object",
   },
   {
     text: "What Pop up box type is NOT available in JavaScript.",
@@ -15,7 +15,7 @@ export const questionList = [
     answer: "Alarm",
   },
   {
-    text: "What is NOT a loop JavaScript.",
+    text: "What loop type does NOT belong to JavaScript.",
     choises: ["for", "of", "in", "about"],
     answer: "about",
   },
