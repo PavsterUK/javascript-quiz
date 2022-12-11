@@ -1,6 +1,6 @@
 import { questionList } from "./questions.js";
 
-const questionH2 = document.getElementById("question-title");
+const questionText = document.getElementById("question-title");
 const choisesDiv = document.getElementById("choices");
 const feedbackDiv = document.getElementById("feedback");
 const startQuizBtn = document.getElementById("start");
@@ -8,7 +8,7 @@ const finalScore = document.getElementById("final-score");
 const submitBtn = document.getElementById("submit");
 
 let timerID = undefined;
-let remainingTime = 75;
+let remainingTime = 76;
 let currentQuestion = 0;
 
 //Function to make an element visible, removes "hide" class.
@@ -24,56 +24,52 @@ function hideElement(ElementID) {
   targetDiv.setAttribute("class", "hide feedback");
 }
 
-//Renders passed quesion object.
-function renderQuestion(question) {
-  questionH2.innerHTML = ""; //Clear previous questio text.
-  choisesDiv.innerHTML = ""; //Clear previous choises.
-  const ol = document.createElement("ol");
-  questionH2.appendChild(document.createTextNode(question.text));
-  for (let choise of question.choises) {
-    const li = document.createElement("li");
-    const btn = document.createElement("button");
-    btn.appendChild(document.createTextNode(choise));
-    li.appendChild(btn);
-    ol.appendChild(li);
-  }
-  choisesDiv.appendChild(ol);
+//Function to start quiz.
+function startQuiz() {
+  intevLoopFn();
+  hideElement("start-screen");
   showElement("questions");
-  currentQuestion++;
+  renderQuestion(questionList[currentQuestion]);
+}
+
+//Renders passed question object.
+function renderQuestion(question) {
+  if (currentQuestion === questionList.length) {
+    endQuiz();
+    return;
+  }
+  const choicesList = document.createElement("ol");
+  questionText.innerText = question.text;
+  choisesDiv.innerHTML = ""; //Clear previous choises.
+
+  for (const choice of question.choises) {
+    choicesList.insertAdjacentHTML(
+      "beforeend",
+      `<li><button> 
+        ${question.choises.indexOf(choice) + 1}. ${choice}
+      </button></li>`
+    );
+  }
+  choisesDiv.appendChild(choicesList);
 }
 
 //Function triggered when user selects one of options.
-function userSelectionHandler(e) {
-  if (currentQuestion < questionList.length) {
-    const userChoise = e.target.innerText;
-    const correctAnswer = questionList[currentQuestion - 1].answer;
-    if (userChoise === correctAnswer) {
-      correctAnswerRoutine();
-    } else {
-      wrongAnswerRoutine();
-    }
-    renderQuestion(questionList[currentQuestion]);
-  } else {
-    quizEndRoutine();
-  }
-}
+function checkAnswer(e) {
+  const userChoise = e.target.innerText;
+  const correctAnswer = questionList[currentQuestion].answer;
 
-//Function to prompt user to enter initials and save score.
-function quizEndRoutine() {
-  finalScore.textContent = remainingTime;
-  showElement("feedback");
-  hideElement("questions");
-  showElement("end-screen");
-  setTimeout(function () {
-    hideElement("feedback");
-  }, 2000);
-  clearInterval(timerID);
+  userChoise.includes(correctAnswer)
+    ? correctAnswerRoutine()
+    : wrongAnswerRoutine();
+
+  currentQuestion++;
+  renderQuestion(questionList[currentQuestion]);
 }
 
 function correctAnswerRoutine() {
   showElement("feedback");
   feedbackDiv.textContent = "Correct!";
-  const audio = new Audio('assets/sfx/correct.wav');
+  const audio = new Audio("assets/sfx/correct.wav");
   audio.play();
   setTimeout(function () {
     hideElement("feedback");
@@ -81,26 +77,38 @@ function correctAnswerRoutine() {
 }
 
 function wrongAnswerRoutine() {
-  remainingTime -= 15;
+  decreaseTimer(15);
   showElement("feedback");
   feedbackDiv.textContent = "Wrong!";
-  const audio = new Audio('assets/sfx/incorrect.wav');
+  const audio = new Audio("assets/sfx/incorrect.wav");
   audio.play();
   setTimeout(function () {
     hideElement("feedback");
   }, 2000);
 }
 
-function startTimer() {
+function intevLoopFn() {
   timerID = setInterval(function () {
-    if (remainingTime > 0) {
-      remainingTime--;
-      document.getElementById("time").textContent = remainingTime;
-    }
+    decreaseTimer(1);
   }, 1000);
 }
 
-//Function to update local storage with latest scores.
+function decreaseTimer(decAmount) {
+  if (remainingTime > decAmount) {
+    remainingTime -= decAmount;
+  } else {
+    remainingTime = 0;
+  }
+  document.getElementById("time").textContent = remainingTime;
+}
+
+function submitBtnEventHandler() {
+  const initials = document.getElementById("initials").value;
+  syncWithLocalStorage(initials, remainingTime);
+  window.location.href = "highscores.html";
+}
+
+//Function to update local storage with latest score.
 function syncWithLocalStorage(initials, userScore) {
   if (!localStorage.getItem("highScores")) {
     let highScores = {
@@ -114,19 +122,14 @@ function syncWithLocalStorage(initials, userScore) {
   }
 }
 
-//Function to start quiz.
-function startQuiz() {
-  startTimer();
-  hideElement("start-screen");
-  renderQuestion(questionList[currentQuestion]);
-}
-
-function submitBtnEventHandler() {
-  const initials = document.getElementById("initials").value;
-  syncWithLocalStorage(initials, remainingTime);
-  window.location.href = "highscores.html";
+//Function to prompt user to enter initials and save score.
+function endQuiz() {
+  finalScore.textContent = remainingTime;
+  hideElement("questions");
+  showElement("end-screen");
+  clearInterval(timerID);
 }
 
 startQuizBtn.addEventListener("click", startQuiz);
-choisesDiv.addEventListener("click", userSelectionHandler);
+choisesDiv.addEventListener("click", checkAnswer);
 submitBtn.addEventListener("click", submitBtnEventHandler);
