@@ -20,9 +20,10 @@ body {
   min-height: 100vh;
   display: flex;
   justify-content: center;
-  font-family: Arial;
+  font-family: "Neutra-Bold";
   font-size: 1.2rem;
-  background-color: var(--js-yellow-cl);
+  background-color: var(--js-black-cl);
+  color: gainsboro;
 }
 
 a {
@@ -36,7 +37,6 @@ a:hover {
 }
 
 button {
-  display: inline-block;
   margin: 5px;
   cursor: pointer;
   font-size: 100%;
@@ -49,59 +49,81 @@ button {
 }
 
 button:hover {
-  background-color: #8570a5;
-}
-
-.choices button {
-  display: block;
-}
-
-input[type="text"] {
-  font-size: 100%;
-}
-
-ol {
-  padding-left: 0px;
-  max-height: 400px;
-  overflow: auto;
-}
-
-li {
-  display: flex;
-  align-items: center;
-  padding: 5px;
-}
-
-li:nth-child(odd) {
-  background-color: #f3edfc;
-}
-
-.wrapper {
-  margin-top: 4em;
-  border: 2px solid #f3edfc;
-  border-radius: 10px;
-  padding: 1em;
-  height:fit-content;
-}
-
-
-.test-header {
-  font-family: "Neutra-Bold";
-  font-size: 3.5rem;
+  background-color: #f0da4f5f;
 }
 
 .hide {
   display: none;
 }
 
-.start {
-  text-align: center;
-}
-
 .scores {
   position: absolute;
   top: 10px;
   left: 10px;
+}
+
+.timer {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  max-width: 600px;
+}
+
+.start {
+  text-align: center;
+}
+
+.start-quiz {
+  padding: 0.5em 5em 0.5em 5em;
+  border: 1px solid grey;
+}
+
+.choicesWrapper {
+  display: grid;
+  gap: 0.5em;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  justify-items: center;
+}
+
+.js-logo {
+  width: fit-content;
+}
+
+.js-logo img {
+  height: clamp(10rem, 15vw, 30rem);
+}
+
+.question-body {
+  text-align: center;
+}
+
+.choise {
+  width: 100%;
+}
+
+.choise button {
+  padding: 0.5em;
+  border: 1px solid grey;
+  border-radius: 20px;
+  width: 100%;
+  font-size: clamp(1rem, 1.7vw, 2rem);
+}
+
+input[type="text"] {
+  font-size: 100%;
+}
+
+.test-header {
+  font-family: "Neutra-Bold";
+  font-size: 3.5rem;
 }
 
 .feedback {
@@ -111,19 +133,4 @@ li:nth-child(odd) {
   padding-top: 10px;
   color: gray;
   border-top: 2px solid #ccc;
-}
-
-.js-logo {
-  font-family: "Neutra-Bold";
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  z-index: -1;
-  font-size: 25rem;
-}
-
-.timer {
-  position: absolute;
-  top: 10px;
-  right: 10px;
 }

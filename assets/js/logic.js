@@ -38,19 +38,18 @@ function renderQuestion(question) {
     endQuiz();
     return;
   }
-  const choicesList = document.createElement("ol");
+
   questionText.innerText = question.text;
   choisesDiv.innerHTML = ""; //Clear previous choises.
 
-  for (const choice of question.choises) {
-    choicesList.insertAdjacentHTML(
+  question.choises.forEach((choise, index) => {
+    choisesDiv.insertAdjacentHTML(
       "beforeend",
-      `<li><button> 
-        ${question.choises.indexOf(choice) + 1}. ${choice}
-      </button></li>`
+      `<div id="choise-${index}" class="choise"><button> 
+        ${choise}
+      </button></div>`
     );
-  }
-  choisesDiv.appendChild(choicesList);
+  })
 }
 
 //Function triggered when user selects one of options.
@@ -62,8 +61,10 @@ function checkAnswer(e) {
     ? correctAnswerRoutine()
     : wrongAnswerRoutine();
 
-  currentQuestion++;
-  renderQuestion(questionList[currentQuestion]);
+  setTimeout(function () {
+    currentQuestion++;
+    renderQuestion(questionList[currentQuestion]);
+  }, 2000);
 }
 
 function correctAnswerRoutine() {

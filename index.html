@@ -15,6 +15,9 @@
     <div class="timer">Time: <span id="time">0</span></div>
 
     <div class="wrapper">
+      <div class="js-logo">
+        <img src="./assets/images/JS-logo.svg" />
+      </div>
       <div id="start-screen" class="start">
         <h1 class="test-header">JavaScript Quiz Test</h1>
         <p>
@@ -22,12 +25,12 @@
           limit. Keep in mind that incorrect answers will penalize your
           score/time by fifteen seconds!
         </p>
-        <button id="start">Start Quiz</button>
+        <button id="start" class="start-quiz">Start Quiz</button>
       </div>
 
       <div id="questions" class="hide">
-        <h2 id="question-title"></h2>
-        <div id="choices" class="choices"></div>
+        <h2 id="question-title" class="question-body" ></h2>
+        <div id="choices" class="choicesWrapper"></div>
       </div>
 
       <div id="end-screen" class="hide">
@@ -41,7 +44,7 @@
 
       <div id="feedback" class="feedback hide"></div>
 
-      <div class="js-logo">JS</div>
+
     </div>
 
     <script src="./assets/js/logic.js" type="module"></script>
