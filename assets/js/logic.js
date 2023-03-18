@@ -38,19 +38,18 @@ function renderQuestion(question) {
     endQuiz();
     return;
   }
-  const choicesList = document.createElement("ol");
+
   questionText.innerText = question.text;
   choisesDiv.innerHTML = ""; //Clear previous choises.
 
-  for (const choice of question.choises) {
-    choicesList.insertAdjacentHTML(
+  question.choises.forEach((choise, index) => {
+    choisesDiv.insertAdjacentHTML(
       "beforeend",
-      `<li><button> 
-        ${question.choises.indexOf(choice) + 1}. ${choice}
-      </button></li>`
+      `<div id="choise-${index}" class="choise"><button> 
+        ${choise}
+      </button></div>`
     );
-  }
-  choisesDiv.appendChild(choicesList);
+  });
 }
 
 //Function triggered when user selects one of options.
@@ -62,29 +61,33 @@ function checkAnswer(e) {
     ? correctAnswerRoutine()
     : wrongAnswerRoutine();
 
-  currentQuestion++;
-  renderQuestion(questionList[currentQuestion]);
+  setTimeout(function () {
+    currentQuestion++;
+    renderQuestion(questionList[currentQuestion]);
+  }, 1000);
 }
 
 function correctAnswerRoutine() {
   showElement("feedback");
   feedbackDiv.textContent = "Correct!";
+  feedbackDiv.style.color = "green";
   const audio = new Audio("assets/sfx/correct.wav");
   audio.play();
   setTimeout(function () {
     hideElement("feedback");
-  }, 2000);
+  }, 1000);
 }
 
 function wrongAnswerRoutine() {
   decreaseTimer(15);
   showElement("feedback");
   feedbackDiv.textContent = "Wrong!";
+  feedbackDiv.style.color = "red";
   const audio = new Audio("assets/sfx/incorrect.wav");
   audio.play();
   setTimeout(function () {
     hideElement("feedback");
-  }, 2000);
+  }, 1000);
 }
 
 function intevLoopFn() {
@@ -99,6 +102,11 @@ function decreaseTimer(decAmount) {
   } else {
     remainingTime = 0;
   }
+
+  if (remainingTime <= 20) {
+    document.getElementById("time").style.color = "red";
+  }
+
   document.getElementById("time").textContent = remainingTime;
 }
 
