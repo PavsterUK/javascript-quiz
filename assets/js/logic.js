@@ -49,7 +49,7 @@ function renderQuestion(question) {
         ${choise}
       </button></div>`
     );
-  })
+  });
 }
 
 //Function triggered when user selects one of options.
@@ -64,28 +64,30 @@ function checkAnswer(e) {
   setTimeout(function () {
     currentQuestion++;
     renderQuestion(questionList[currentQuestion]);
-  }, 2000);
+  }, 1000);
 }
 
 function correctAnswerRoutine() {
   showElement("feedback");
   feedbackDiv.textContent = "Correct!";
+  feedbackDiv.style.color = "green";
   const audio = new Audio("assets/sfx/correct.wav");
   audio.play();
   setTimeout(function () {
     hideElement("feedback");
-  }, 2000);
+  }, 1000);
 }
 
 function wrongAnswerRoutine() {
   decreaseTimer(15);
   showElement("feedback");
   feedbackDiv.textContent = "Wrong!";
+  feedbackDiv.style.color = "red";
   const audio = new Audio("assets/sfx/incorrect.wav");
   audio.play();
   setTimeout(function () {
     hideElement("feedback");
-  }, 2000);
+  }, 1000);
 }
 
 function intevLoopFn() {
@@ -100,6 +102,11 @@ function decreaseTimer(decAmount) {
   } else {
     remainingTime = 0;
   }
+
+  if (remainingTime <= 20) {
+    document.getElementById("time").style.color = "red";
+  }
+
   document.getElementById("time").textContent = remainingTime;
 }
 
